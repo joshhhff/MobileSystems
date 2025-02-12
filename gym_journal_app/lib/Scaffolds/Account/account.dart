@@ -51,6 +51,7 @@ class _AccountState extends State<Account> {
         
                     return Scaffold(
                         key: _scaffoldKey,
+                        backgroundColor: primaryThemeColour,
                         appBar: PreferredSize(
                             preferredSize: const Size.fromHeight(55.0), // Increase AppBar height
                             child: MyAppBar(sidebarState: _scaffoldKey, title: 'Account'),
@@ -60,14 +61,16 @@ class _AccountState extends State<Account> {
                             child: Column(
                                 children: <Widget>[
                                     Container(
-                                        margin: const EdgeInsets.all(25.0),
+                                        //margin: const EdgeInsets.all(25.0),
+                                        padding: const EdgeInsets.all(25.0),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            //borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50.0))
                                         ),
                                         child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: <Widget>[
                                                 Row(
                                                     children: [
@@ -127,7 +130,7 @@ class _AccountState extends State<Account> {
                                         ),
                                         decoration: BoxDecoration(
                                             color: primaryThemeColour,
-                                            borderRadius: BorderRadius.only(topLeft: Radius.circular(50.0)),
+                                            //borderRadius: BorderRadius.only(topLeft: Radius.circular(50.0)),
                                         ),
                                         child: Center(
                                             child: Column(

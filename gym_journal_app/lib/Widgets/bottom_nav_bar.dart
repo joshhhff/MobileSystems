@@ -22,6 +22,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       color: primaryThemeColour, // Set the background color here
       child: Container(
         margin: const EdgeInsets.all(10.0),
+        height: 100,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30.0),

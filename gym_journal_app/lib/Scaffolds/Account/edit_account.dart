@@ -109,6 +109,7 @@ class _EditAccountState extends State<EditAccount> {
         
                     return Scaffold(
                         key: _scaffoldKey,
+                        backgroundColor: primaryThemeColour,
                         appBar: PreferredSize(
                             preferredSize: const Size.fromHeight(55.0), // Increase AppBar height
                             child: MyAppBar(sidebarState: _scaffoldKey, title: 'Edit Account'),
@@ -118,11 +119,11 @@ class _EditAccountState extends State<EditAccount> {
                             child: Column(
                                 children: <Widget>[
                                     Container(
-                                        margin: const EdgeInsets.all(25.0),
+                                        padding: const EdgeInsets.all(25.0),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
                                         ),
                                         child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,

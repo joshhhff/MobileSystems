@@ -20,6 +20,8 @@ class _WaterLogsState extends State<WaterLogs> {
 	final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final _databaseController = DatabaseController();
 
+    static const double boxheight = 110;
+
     Future<Result> fetchAllData() async {
         try {
             var entries = await _databaseController.RetrieveCollection('entries', 'water');
@@ -100,12 +102,11 @@ class _WaterLogsState extends State<WaterLogs> {
                             child: MyAppBar(sidebarState: _scaffoldKey, title: 'Water Logs'),
                         ),
                         drawer: const SideBar(),
-                        body: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                            child: Column(
+                        body: Column(
                                 children: <Widget>[
                                     Container(
                                         margin: const EdgeInsets.all(25.0),
+                                        height: boxheight,
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                             color: Colors.white,
@@ -135,7 +136,7 @@ class _WaterLogsState extends State<WaterLogs> {
                                         ),
                                     ),
                                     Container(
-                                        height: MediaQuery.of(context).size.height - 350, // Adjust the height as needed
+                                        //height: MediaQuery.of(context).size.height - boxheight - 60, // Adjust the height as needed
                                         decoration: BoxDecoration(
                                             color: primaryThemeColour,
                                             borderRadius: BorderRadius.only(
@@ -150,61 +151,65 @@ class _WaterLogsState extends State<WaterLogs> {
                                                 ),
                                                 Container(
                                                     padding: EdgeInsets.only(left: 25.0),
-                                                    child: Align(
-                                                        alignment: Alignment.centerLeft,
-                                                        child: Text('Previous logs', style: TextStyle(
-                                                            fontSize: 24, 
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.white,
-                                                        )),
-                                                    ),
+                                                    child: Column(
+                                                        children: [
+                                                            Align(
+                                                                alignment: Alignment.centerLeft,
+                                                                child: Text('Previous logs', style: TextStyle(
+                                                                    fontSize: 24, 
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.white,
+                                                                )),
+                                                            ),
+                                                            const SizedBox(height: 20),
+                                                            Container(
+                                                                padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                                                                height: MediaQuery.sizeOf(context).height - 555.334,
+                                                                child: ListView.builder(
+                                                                    itemCount: waterLogs.length,
+                                                                    itemBuilder: (context ,index) {
+                                                                    final element = waterLogs[index];
+                                                                
+                                                                    return Container(
+                                                                        width: double.infinity,
+                                                                        margin: const EdgeInsets.only(bottom: 10.0),
+                                                                        padding: const EdgeInsets.all(10.0),
+                                                                        decoration: BoxDecoration(
+                                                                            color: Colors.white,
+                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                            boxShadow: [
+                                                                                BoxShadow(
+                                                                                    color: Colors.grey.withOpacity(0.5),
+                                                                                    spreadRadius: 5,
+                                                                                    blurRadius: 7,
+                                                                                    offset: Offset(0, 3),
+                                                                                ),
+                                                                            ],
+                                                                        ),
+                                                                        child: Row(
+                                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                                            children: [
+                                                                                Icon(Icons.local_drink, size: 40, color: primaryThemeColour),
+                                                                                Expanded(
+                                                                                    child: Text('${element['waterAmount']} ${element['waterUnits']}${element['waterAmount'] != 1 ? 's' : ''}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                                                ),
+                                                                                Column(
+                                                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                                                    children: [
+                                                                                        Text(element['drinkDate'], textAlign: TextAlign.right, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                                                                        Text(element['drinkTime'], textAlign: TextAlign.right, style: TextStyle(fontSize: 14)),
+                                                                                    ],
+                                                                                ),
+                                                                                const SizedBox(width: 20),
+                                                                                Icon(Icons.edit, size: 30, color: tertiaryThemeColour),
+                                                                            ],
+                                                                        ),
+                                                                    );
+                                                                }),
+                                                                ),      
+                                                        ]
+                                                    ) 
                                                 ),
-                                                const SizedBox(height: 20),
-                                                Container(
-                                                padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                                                  height: 300,
-                                                  child: ListView.builder(
-                                                    itemCount: waterLogs.length,
-                                                    itemBuilder: (context ,index) {
-                                                      final element = waterLogs[index];
-                                                  
-                                                    return Container(
-                                                          width: double.infinity,
-                                                          margin: const EdgeInsets.only(bottom: 10.0),
-                                                          padding: const EdgeInsets.all(10.0),
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.white,
-                                                              borderRadius: BorderRadius.circular(10.0),
-                                                              boxShadow: [
-                                                                  BoxShadow(
-                                                                      color: Colors.grey.withOpacity(0.5),
-                                                                      spreadRadius: 5,
-                                                                      blurRadius: 7,
-                                                                      offset: Offset(0, 3),
-                                                                  ),
-                                                              ],
-                                                          ),
-                                                          child: Row(
-                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                              children: [
-                                                                  Icon(Icons.local_drink, size: 40, color: primaryThemeColour),
-                                                                  Expanded(
-                                                                      child: Text('${element['waterAmount']} ${element['waterUnits']}${element['waterAmount'] != 1 ? 's' : ''}', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                                                  ),
-                                                                  Column(
-                                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                                      children: [
-                                                                          Text(element['drinkDate'], textAlign: TextAlign.right, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                                                          Text(element['drinkTime'], textAlign: TextAlign.right, style: TextStyle(fontSize: 14)),
-                                                                      ],
-                                                                  ),
-                                                                  const SizedBox(width: 20),
-                                                                  Icon(Icons.edit, size: 30, color: tertiaryThemeColour),
-                                                              ],
-                                                          ),
-                                                      );
-                                                  }),
-                                                ),      
                                                 if (waterLogs.isEmpty) 
                                                     Center(
                                                         heightFactor: 2.0,
@@ -229,7 +234,6 @@ class _WaterLogsState extends State<WaterLogs> {
                                     ),
                                 ],
                             ),
-                        ),
                         bottomNavigationBar: const BottomNavBar(page: 'logs'),
                     );
                         
