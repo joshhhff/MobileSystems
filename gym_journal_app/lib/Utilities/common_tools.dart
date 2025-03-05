@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CommonTools {
@@ -27,6 +28,13 @@ class CommonTools {
             default:
                 return 0.0;
         }
+    }
+
+    void movePage(context, screen) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => screen()),
+      );
     }
 
     double calculateProgressPercentage(double goal, String goalUnit, double logged, String loggedUnit) {

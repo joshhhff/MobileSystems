@@ -144,22 +144,26 @@ class _WaterLogsState extends State<WaterLogs> {
                                             ),
                                         ),
                                         child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                                 Container(
                                                     padding: const EdgeInsets.only(top: 25.0),
                                                     child: WaterProgress(details: userDetails, waterDetails: dailyWaterConsumed),
                                                 ),
                                                 Container(
-                                                    padding: EdgeInsets.only(left: 25.0),
                                                     child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
                                                         children: [
                                                             Align(
                                                                 alignment: Alignment.centerLeft,
-                                                                child: Text('Previous logs', style: TextStyle(
-                                                                    fontSize: 24, 
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: Colors.white,
-                                                                )),
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets.only(left: 25),
+                                                                  child: Text('Previous logs', style: TextStyle(
+                                                                      fontSize: 24, 
+                                                                      fontWeight: FontWeight.bold,
+                                                                      color: Colors.white,
+                                                                  )),
+                                                                ),
                                                             ),
                                                             const SizedBox(height: 20),
                                                             Container(

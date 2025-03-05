@@ -18,21 +18,15 @@ class _ButtonWithIconState extends State<ButtonWithIcon> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      /* onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => widget.page),
-        );
-      }, */
       onPressed: widget.onClick,
       style: ElevatedButton.styleFrom(
         backgroundColor: widget.colour, // Button color
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0), // Rounded corners
           side: BorderSide(
-        color: widget.borderColour ?? Colors.transparent, // Border color
-        width: 1.0, // Border width
-          ),
+            color: widget.borderColour ?? Colors.transparent, // Border color
+            width: 1.0, // Border width
+              ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
       ),
