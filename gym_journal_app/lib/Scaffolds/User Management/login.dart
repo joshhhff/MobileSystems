@@ -41,15 +41,12 @@ class _LoginState extends State<Login> {
                         top: titleController,
                         left: 16,
                         right: 16,
-                        child: Row(
+                        child: Column(
                             children: [
-                                const Icon(
-                                    Icons.account_circle,
-                                    size: 100,
-                                    color: Colors.white,
-                                ),
-                                const SizedBox(width: 16),
-                                Text('Login', style: TextStyle(color: Colors.white, fontSize: 50)),
+                              Image.asset(
+                                'lib/media/GymJournal Logo.png',
+                                width: 500.0, // Set the desired width here
+                              ),
                             ],
                         ),
                     ),
@@ -60,7 +57,14 @@ class _LoginState extends State<Login> {
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                    SizedBox(height: 200),
+                                    SizedBox(height: 100),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                      Text('Login', style: TextStyle(color: primaryThemeColour, fontSize: 30, fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
                                     TextField(
                                         keyboardType: TextInputType.emailAddress,
                                         controller: _emailController,

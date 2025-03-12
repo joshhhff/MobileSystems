@@ -406,17 +406,14 @@ class _EditAccountState extends State<EditAccount> {
                                                                                         border: OutlineInputBorder(
                                                                                             borderSide: BorderSide(color: primaryThemeColour)
                                                                                         ),
-                                                                                        
                                                                                     ),
                                                                                     icon: Icon(
                                                                                         Icons.arrow_drop_down,
                                                                                         color: Colors.black, // Change the arrow icon color here
                                                                                     ),
                                                                                     onChanged: (String? newValue) {
-                                                                                        setState(() {
                                                                                             dropdownValue = newValue!;
                                                                                             _unitController.text = newValue;
-                                                                                        });
                                                                                     },
                                                                                     items: <String>['ml', 'litre', 'pint'].map<DropdownMenuItem<String>>((String value) {
                                                                                         return DropdownMenuItem<String>(

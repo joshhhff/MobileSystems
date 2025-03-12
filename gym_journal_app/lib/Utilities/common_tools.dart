@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
 
 class CommonTools {
     // returns ISO timestamp - 2025-02-05T20:24:06.907888
@@ -56,4 +57,20 @@ class CommonTools {
                 return 0.0;
         }
     }
+
+
+    String createUniqueID() {
+      const String chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()_+-=[]{}|;:,.<>?';
+      Random rnd = Random();
+      return String.fromCharCodes(Iterable.generate(16, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
+    }
+
+    String formatTime(int seconds) {
+      int hours = seconds ~/ 3600;
+      int minutes = (seconds % 3600) ~/ 60;
+      int secs = seconds % 60;
+
+      return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+    }
+    
 }

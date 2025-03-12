@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_journal_app/Scaffolds/Account/settings.dart';
+import 'package:gym_journal_app/Scaffolds/Workouts/workouts.dart';
 import 'package:gym_journal_app/Scaffolds/water_logs.dart';
 import 'package:gym_journal_app/Themes/theme.dart';
 
@@ -28,20 +29,10 @@ class _DashboardState extends State<Dashboard> {
                         GestureDetector(
                             onTap: () {
                                 // Navigate to workout history page
-                                showDialog(context: context, builder: (context) {
-                                    return AlertDialog(
-                                        title: Text('Workout History'),
-                                        content: Text('Workout history goes here'),
-                                        actions: [
-                                            TextButton(
-                                                onPressed: () {
-                                                    Navigator.pop(context);
-                                                },
-                                                child: Text('Close'),
-                                            ),
-                                        ],
-                                    );
-                                });
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const Workout()),
+                                );
                             },
                             child: Container(
                                 width: MediaQuery.of(context).size.width * 0.4,

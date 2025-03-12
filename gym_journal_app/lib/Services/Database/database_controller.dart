@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:gym_journal_app/Models/Result.dart';
 import 'package:gym_journal_app/Models/User.dart';
 import 'package:gym_journal_app/Models/WaterConsumed.dart';
+import 'package:gym_journal_app/Models/WorkoutLog.dart';
 import 'package:gym_journal_app/Utilities/common_tools.dart';
 
 class DatabaseController {
@@ -176,6 +177,102 @@ class DatabaseController {
                 return Result(success: false, message: 'Error retrieving water entries');
             }
         } catch(e) {
+            return Result(success: false, message: e.toString());
+        }
+    }
+
+    Future<Result> getAllExercises() async {
+        try {
+            var firestoreCollection = _firestore.collection('exercises');
+
+            QuerySnapshot querySnapshot = await firestoreCollection.get();
+
+            // Get data from docs and convert map to List
+            final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+            Map<String, List> groupedData = {};
+
+            for (var exercise in data) {
+                String target = (exercise as Map<String, dynamic>)['target'] ?? 'Unknown';
+
+                if (!groupedData.containsKey(target)) {
+                    groupedData[target] = [];
+                }
+                groupedData[target]!.add(exercise);
+            }
+
+            return Result(success: true, message: 'Data retrieved and grouped successfully', data: groupedData);
+        } catch (e) {
+            return Result(success: false, message: e.toString());
+        }
+    }
+
+    Future<Result> logNewWorkout(WorkoutLog workout) async {
+        try {
+            var firestoreCollection = _firestore.collection('entries').doc('all-entries').collection('workouts');
+
+            var workoutData = workout.ToJSON();
+            
+            var newWorkout = await firestoreCollection.add(workoutData);
+
+            for (int exerciseCounter = 0; exerciseCounter < workout.exercises.length; exerciseCounter++) {
+                var exercise = workout.exercises[exerciseCounter];
+                exercise.workoutId = newWorkout.id;
+                exercise.exerciseOrder = exerciseCounter;
+                var exerciseData = exercise.ToJSON();
+
+                var exerciseCollection = _firestore.collection('entries').doc('all-entries').collection('exercises');
+                var newExercise = await exerciseCollection.add(exerciseData);
+
+                for (int setCounter = 0; setCounter < (exercise.sets?.length ?? 0); setCounter++) {
+                    var set = exercise.sets![setCounter];
+                    set.exerciseId = newExercise.id;
+                    set.setOrder = setCounter;
+
+                    var setCollection = _firestore.collection('entries').doc('all-entries').collection('sets');
+
+                    await setCollection.add(set.ToJSON());
+                }
+            }
+
+            return Result(success: true, message: 'Workout logged successfully');
+        } catch (e) {
+            return Result(success: false, message: e.toString());
+        }
+    }
+
+    Future<Result> getWorkoutData(String workoutId) async {
+        try {
+            var firestoreCollection = _firestore.collection('entries').doc('all-entries').collection('exercises');
+
+            var querySnapshot = await firestoreCollection.where('workoutId', isEqualTo: workoutId).get();
+
+            var exercises = querySnapshot.docs.map((doc) {
+                var data = doc.data();
+                data['id'] = doc.id; // Retain the document ID
+                return data;
+            }).toList();
+
+            exercises.sort((a, b) => (a['exerciseOrder'] as int).compareTo(b['exerciseOrder'] as int));
+
+            for (int i = 0; i < exercises.length; i++) {
+                var exercise = exercises[i];
+                var exerciseId = exercise['id'];
+                var sets = await _firestore.collection('entries').doc('all-entries').collection('sets').where('exerciseId', isEqualTo: exerciseId).get();
+
+                var setList = sets.docs.map((doc) {
+                    var data = doc.data();
+                    data['id'] = doc.id;
+                    return data;
+                }).toList();
+
+                setList.sort((a, b) => (a['setOrder'] as int).compareTo(b['setOrder'] as int));
+
+                exercises[i]['sets'] = setList;
+            }
+
+            return Result(success: true, message: 'Workout data retrieved and sorted successfully', data: exercises);
+        } catch (e) {
             return Result(success: false, message: e.toString());
         }
     }

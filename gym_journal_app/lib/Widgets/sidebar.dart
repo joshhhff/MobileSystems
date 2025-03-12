@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_journal_app/Scaffolds/Account/account.dart';
 import 'package:gym_journal_app/Scaffolds/home.dart';
 import 'package:gym_journal_app/Scaffolds/User%20Management/login.dart';
-import 'package:gym_journal_app/Scaffolds/workouts.dart';
+import 'package:gym_journal_app/Scaffolds/Workouts/workouts.dart';
 import 'package:gym_journal_app/Services/Authentication/Controllers/AuthenticationServices.dart';
 import 'package:gym_journal_app/Themes/theme.dart';
 
@@ -24,7 +24,7 @@ class _SideBarState extends State<SideBar> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
+            DrawerHeader(
               decoration: BoxDecoration(
                 color: primaryThemeColour,
               ),
@@ -40,18 +40,12 @@ class _SideBarState extends State<SideBar> {
                 ), */
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Icon(Icons.fitness_center, size: 50, color: Colors.white),
-                  SizedBox(width: 10), // Add spacing between the icon and the text
-                  Text(
-                    'GymJournal',
-                    style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
+                    children: [
+                    Image.asset(
+                      'lib/media/GymJournal Logo.png',
+                      width: 250.0, // Set the desired width here
                     ),
-                  ),
-                  ],
+                    ],
                 )
               ),
             ),

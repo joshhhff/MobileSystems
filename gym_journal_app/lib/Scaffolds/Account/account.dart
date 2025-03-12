@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_journal_app/Models/Result.dart';
 import 'package:gym_journal_app/Scaffolds/Account/edit_account.dart';
 import 'package:gym_journal_app/Scaffolds/Account/settings.dart';
 import 'package:gym_journal_app/Services/Database/database_controller.dart';
@@ -18,11 +19,29 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
     final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final _databaseController = DatabaseController();
+
+    Future<int> retrieveTotalWorkouts() async {
+        var totalWorkouts = await _databaseController.RetrieveCollection('entries', 'workouts');
+
+        return totalWorkouts.data.docs.length;
+    }
+
+    Future<Result> fetchData() async {
+        try {
+            var userDetails = await _databaseController.RetrieveUserDetails();
+            var totalWorkouts = await retrieveTotalWorkouts();
+
+            return Result(success: true, data: [userDetails, totalWorkouts], message: '');
+        } catch (e) {
+            return Result(success: false, data: e, message: '');
+        }
+    }
+
     @override
     Widget build(BuildContext context) {
 
         return FutureBuilder(
-            future: _databaseController.RetrieveUserDetails(),
+            future: fetchData(),
             builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
@@ -34,7 +53,10 @@ class _AccountState extends State<Account> {
                 } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                 } else {
-                    var userDetails = snapshot.data?.data.docs[0].data();
+                    final result = snapshot.data as Result;
+                    var userDetails = result.data[0].data.docs[0].data();
+                    int totalWorkouts = result.data[1];
+
                     String firstName = userDetails['firstName'];
                     String lastName = userDetails['lastName'];
                     String email = userDetails['email'];
@@ -209,7 +231,7 @@ class _AccountState extends State<Account> {
                                                                     child: Row(
                                                                         children: [
                                                                             Text('Total Workouts - ', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
-                                                                            Text(' totalWorkouts', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
+                                                                            Text('$totalWorkouts', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
                                                                         ],)
                                                                 ),
                                                                 Padding(

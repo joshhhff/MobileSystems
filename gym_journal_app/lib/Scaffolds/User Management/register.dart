@@ -69,7 +69,7 @@ class _RegisterState extends State<Register> {
         return Scaffold(
             body: Stack(
                 children: [
-                    CustomPaint(
+                  CustomPaint(
                         size: Size(MediaQuery.of(context).size.width, MediaQuery.of(context).size.height),
                         painter: WavePainter(waveHeightFactor: 0.3),
                     ),
@@ -81,29 +81,10 @@ class _RegisterState extends State<Register> {
                         right: 16,
                         child: Column(
                             children: [
-                                Align(
-                                    alignment: Alignment.topLeft,
-                                    child: IconButton(
-                                        icon: const Icon(Icons.arrow_back, size: 50, color: Colors.white),
-                                        onPressed: () {
-                                           Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => const Login()),
-                                            );
-                                        },
-                                    ),
-                                ),
-                                Row(
-                                    children: [
-                                        const Icon(
-                                            Icons.account_circle,
-                                            size: 100,
-                                            color: Colors.white,
-                                        ),
-                                        const SizedBox(width: 16),
-                                        Text('Sign up', style: TextStyle(color: Colors.white, fontSize: 50)),
-                                    ],
-                                ),
+                              Image.asset(
+                                'lib/media/GymJournal Logo.png',
+                                width: 500.0, // Set the desired width here
+                              ),
                             ],
                         ),
                     ),
@@ -113,7 +94,14 @@ class _RegisterState extends State<Register> {
                             child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                    SizedBox(height: heightController),
+                                    SizedBox(height: 200),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                      Text('Sign Up', style: TextStyle(color: primaryThemeColour, fontSize: 30, fontWeight: FontWeight.bold)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20),
                                     TextField(
                                         controller: _firstNameController,
                                         decoration: const InputDecoration(

@@ -1,0 +1,2 @@
+/Users/joshford/Desktop/Josh's Folder/Code/MobileSystems/gym_journal_app/android/app/.cxx/Debug/4k3w732o/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/joshford/Desktop/Josh's Folder/Code/MobileSystems/gym_journal_app/android/app/.cxx/Debug/4k3w732o/arm64-v8a/CMakeFiles/rebuild_cache.dir

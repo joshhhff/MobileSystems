@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_journal_app/Scaffolds/Account/account.dart';
 import 'package:gym_journal_app/Scaffolds/home.dart';
 import 'package:gym_journal_app/Scaffolds/water_logs.dart';
-import 'package:gym_journal_app/Scaffolds/workouts.dart';
+import 'package:gym_journal_app/Scaffolds/Workouts/workouts.dart';
 import 'package:gym_journal_app/Themes/theme.dart';
 import 'package:gym_journal_app/Widgets/multi_select_button.dart';
 
@@ -21,6 +21,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Container(
       color: primaryThemeColour, // Set the background color here
       child: Container(
+        alignment: Alignment.center,
         margin: const EdgeInsets.all(10.0),
         height: 100,
         decoration: BoxDecoration(
@@ -35,78 +36,74 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ),
           ],
         ),
-        child: BottomAppBar(
-          color: Colors.transparent,
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Container(
+            alignment: Alignment.center,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // HOME ICON
-                IconButton(
-                  icon: Icon(
-                    Icons.home,
-                    size: 40.0,
-                    color: widget.page == 'home' ? primaryThemeColour : tertiaryThemeColour,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  // HOME ICON
+                  IconButton(
+                    icon: Icon(
+                      Icons.home,
+                      size: 40.0,
+                      color: widget.page == 'home' ? primaryThemeColour : tertiaryThemeColour,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MyHomePage()),
-                    );
-                  },
-                ),
-                // WORKOUT ICON
-                IconButton(
-                  icon: Icon(
-                    Icons.fitness_center,
-                    size: 40.0,
-                    color: widget.page == 'exercise' ? primaryThemeColour : tertiaryThemeColour,
+                  // WORKOUT ICON
+                  IconButton(
+                    icon: Icon(
+                      Icons.fitness_center,
+                      size: 40.0,
+                      color: widget.page == 'exercise' ? primaryThemeColour : tertiaryThemeColour,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Workout()),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Workout()),
-                    );
-                  },
-                ),
-                // MULTI SELECT ICON
-                const MultiSelectButton(),
-                
-                // LOGS ICON
-                IconButton(
-                  icon: Icon(
-                    Icons.local_drink,
-                    size: 40.0,
-                    color: widget.page == 'logs' ? primaryThemeColour : tertiaryThemeColour,
+                  // MULTI SELECT ICON
+                  const MultiSelectButton(),
+                  
+                  // LOGS ICON
+                  IconButton(
+                    icon: Icon(
+                      Icons.local_drink,
+                      size: 40.0,
+                      color: widget.page == 'logs' ? primaryThemeColour : tertiaryThemeColour,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const WaterLogs()),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const WaterLogs()),
-                    );
-                  },
-                ),
-                // ACCOUNT ICON
-                IconButton(
-                  icon: Icon(
-                    Icons.account_circle,
-                    size: 40.0,
-                    color: widget.page == 'account' ? primaryThemeColour : tertiaryThemeColour,
+                  // ACCOUNT ICON
+                  IconButton(
+                    icon: Icon(
+                      Icons.account_circle,
+                      size: 40.0,
+                      color: widget.page == 'account' ? primaryThemeColour : tertiaryThemeColour,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Account()),
+                      );
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Account()),
-                    );
-                  },
-                ),
-              ],
-            ),
+                ],
+              ),
           ),
         ),
-      ),
     );
   }
 }

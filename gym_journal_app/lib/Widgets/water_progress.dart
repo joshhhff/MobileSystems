@@ -39,7 +39,7 @@ class _WaterProgressState extends State<WaterProgress> {
                                     Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                            '${widget.waterDetails.consumedInPreferredUnit.toStringAsFixed(2)} / ${widget.details['waterGoal']} litres consumed',
+                                            '${widget.waterDetails.consumedInPreferredUnit.toStringAsFixed(2)} / ${widget.details['waterGoal']} ${widget.details['waterUnit']}s consumed',
                                             style: const TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold),
                                         ),
                                     ),
