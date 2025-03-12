@@ -32,9 +32,7 @@ class _NewExcerciseState extends State<NewExcercise> {
 
     void addSet() {
         setState(() {
-            SetEntry lastSet = sets.last;
-            
-            sets.add(SetEntry(
+          sets.add(SetEntry(
                 weight: '',
                 reps: '',
             ));
@@ -162,24 +160,6 @@ class _NewExcerciseState extends State<NewExcercise> {
                                                                         keyboardType: TextInputType.numberWithOptions(decimal: true),
                                                                         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
                                                                         style: const TextStyle(color: Colors.white),
-                                                                        onTapOutside: (event) {
-                                                                            String value = set.weightController.text;
-                                                                            if (value.isEmpty) {
-                                                                                set.weightController.text = '';
-                                                                            } else {
-                                                                                set.weight = double.tryParse(value) ?? 0;
-                                                                            }
-                                                                            updateSet(set, index);
-                                                                        },
-                                                                        onEditingComplete: () {
-                                                                            String value = set.weightController.text;
-                                                                            if (value.isEmpty) {
-                                                                                set.weightController.text = '';
-                                                                            } else {
-                                                                                set.weight = double.tryParse(value) ?? 0;
-                                                                            }
-                                                                            updateSet(set, index);
-                                                                        },
                                                                     ),
                                                                 ),
                                                                 const SizedBox(width: 5),
@@ -200,24 +180,6 @@ class _NewExcerciseState extends State<NewExcercise> {
                                                                         ),
                                                                         keyboardType: TextInputType.number,
                                                                         style: const TextStyle(color: Colors.white),
-                                                                        onTapOutside: (event) {
-                                                                            String value = set.repsController.text;
-                                                                            if (value.isEmpty) {
-                                                                                set.repsController.text = '';
-                                                                            } else {
-                                                                                set.reps = int.tryParse(value) ?? 0;
-                                                                            }
-                                                                            updateSet(set, index);
-                                                                        },
-                                                                        onEditingComplete: () {
-                                                                            String value = set.repsController.text;
-                                                                            if (value.isEmpty) {
-                                                                                set.repsController.text = '';
-                                                                            } else {
-                                                                                set.reps = int.tryParse(value) ?? 0;
-                                                                            }
-                                                                            updateSet(set, index);
-                                                                        },
                                                                     ),
                                                                 ),
                                                                 const SizedBox(width: 5),

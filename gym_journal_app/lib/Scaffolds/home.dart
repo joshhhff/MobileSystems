@@ -29,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
     
     Future<Result> getWaterConsumed() async {
         try {
-            Result waterConsumed = await _databaseController.getWaterConsumed();
+            Result waterConsumed = await _databaseController.getWaterConsumed(getTotalWater: false);
 
             if (waterConsumed.success) {
                 return Result(success: true, message: 'Water entries retrieved successfully', data: waterConsumed.data);
@@ -78,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 
                                 return Scaffold(
                                     key: _scaffoldKey,
+                                    resizeToAvoidBottomInset: false,
                                     appBar: PreferredSize(
                                         preferredSize: const Size.fromHeight(60.0), // Increase AppBar height
                                         child: MyAppBar(sidebarState: _scaffoldKey, title: 'Home'),

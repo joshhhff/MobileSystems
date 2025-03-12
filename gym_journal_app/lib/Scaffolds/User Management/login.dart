@@ -29,6 +29,7 @@ class _LoginState extends State<Login> {
     @override
     Widget build(BuildContext context) {
         return Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Stack(
                 children: [
                     CustomPaint(
@@ -79,11 +80,6 @@ class _LoginState extends State<Login> {
                                     ),
                                     const SizedBox(height: 16),
                                     Focus(
-                                        onFocusChange: (hasFocus) {
-                                            setState(() {
-                                                titleController = hasFocus ? 60 : 120;
-                                            });
-                                        },
                                         child: TextField(
                                             controller: _passwordController,
                                             decoration: const InputDecoration(

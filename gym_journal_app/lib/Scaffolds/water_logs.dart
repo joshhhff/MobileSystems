@@ -48,7 +48,7 @@ class _WaterLogsState extends State<WaterLogs> {
 
     Future<Result> getWaterConsumed() async {
         try {
-            Result waterConsumed = await _databaseController.getWaterConsumed();
+            Result waterConsumed = await _databaseController.getWaterConsumed(getTotalWater: false);
 
             if (waterConsumed.success) {
                 return Result(success: true, message: 'Water entries retrieved successfully', data: waterConsumed.data);
@@ -94,6 +94,7 @@ class _WaterLogsState extends State<WaterLogs> {
 
                             return Scaffold(
                                 key: _scaffoldKey,
+                                resizeToAvoidBottomInset: false,
                                 appBar: PreferredSize(
                                     preferredSize: const Size.fromHeight(55.0),
                                     child: MyAppBar(sidebarState: _scaffoldKey, title: 'Water Logs'),

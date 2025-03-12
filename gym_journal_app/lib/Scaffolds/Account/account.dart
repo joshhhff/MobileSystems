@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_journal_app/Models/Result.dart';
+import 'package:gym_journal_app/Models/WaterConsumed.dart';
 import 'package:gym_journal_app/Scaffolds/Account/edit_account.dart';
 import 'package:gym_journal_app/Scaffolds/Account/settings.dart';
 import 'package:gym_journal_app/Services/Database/database_controller.dart';
@@ -26,12 +27,21 @@ class _AccountState extends State<Account> {
         return totalWorkouts.data.docs.length;
     }
 
+    Future<WaterConsumed> retrieveTotalWater() async {
+      var totalWater = await _databaseController.getWaterConsumed(getTotalWater: true);
+      print('totalWater $totalWater');
+
+      return totalWater.data;
+    }
+
     Future<Result> fetchData() async {
         try {
             var userDetails = await _databaseController.RetrieveUserDetails();
             var totalWorkouts = await retrieveTotalWorkouts();
+            WaterConsumed totalWater = await retrieveTotalWater();
+            print('total water $totalWater');
 
-            return Result(success: true, data: [userDetails, totalWorkouts], message: '');
+            return Result(success: true, data: [userDetails, totalWorkouts, double.parse(totalWater.consumedInPreferredUnit.toStringAsFixed(2))], message: '');
         } catch (e) {
             return Result(success: false, data: e, message: '');
         }
@@ -56,6 +66,7 @@ class _AccountState extends State<Account> {
                     final result = snapshot.data as Result;
                     var userDetails = result.data[0].data.docs[0].data();
                     int totalWorkouts = result.data[1];
+                    var totalWater = result.data[2];
 
                     String firstName = userDetails['firstName'];
                     String lastName = userDetails['lastName'];
@@ -239,7 +250,7 @@ class _AccountState extends State<Account> {
                                                                     child: Row(
                                                                         children: [
                                                                             Text('Total Water - ', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
-                                                                            Text(' totalWater', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
+                                                                            Text(' $totalWater $unitPreference', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold)),
                                                                         ],)
                                                                 ),
                                                             ],

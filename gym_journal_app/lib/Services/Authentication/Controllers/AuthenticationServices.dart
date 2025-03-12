@@ -12,6 +12,9 @@ Password: AdminPassword123
 
 Email: joshtest2@gmail.com
 Password: AdminPassword123!
+
+Email: ashton@gmail.com
+Password: AdminPassword123!
 */
 
 class AuthenticationController {

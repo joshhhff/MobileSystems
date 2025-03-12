@@ -67,6 +67,7 @@ class _SettingsState extends State<Settings> {
         
                     return Scaffold(
                         key: _scaffoldKey,
+                        resizeToAvoidBottomInset: false,
                         appBar: PreferredSize(
                             preferredSize: const Size.fromHeight(55.0), // Increase AppBar height
                             child: MyAppBar(sidebarState: _scaffoldKey, title: 'Settings'),

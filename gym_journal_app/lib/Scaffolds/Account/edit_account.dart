@@ -109,6 +109,7 @@ class _EditAccountState extends State<EditAccount> {
         
                     return Scaffold(
                         key: _scaffoldKey,
+                        resizeToAvoidBottomInset: false,
                         backgroundColor: primaryThemeColour,
                         appBar: PreferredSize(
                             preferredSize: const Size.fromHeight(55.0), // Increase AppBar height

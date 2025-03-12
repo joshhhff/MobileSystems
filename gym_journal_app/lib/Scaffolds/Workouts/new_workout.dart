@@ -47,7 +47,6 @@ class _NewWorkoutState extends State<NewWorkout> {
             final index = exercises.indexWhere((element) => element.uniqueKey == workout);
             if (index != -1) {
                 exercises[index].sets = sets;
-                print('updated exercise ${exercises[index].sets}');
             }
         });
     }
@@ -108,6 +107,7 @@ class _NewWorkoutState extends State<NewWorkout> {
 
         return Scaffold(
             key: _scaffoldKey,
+            resizeToAvoidBottomInset: false,
             backgroundColor: primaryThemeColour,
             appBar: PreferredSize(
                 preferredSize: Size.fromHeight(100),

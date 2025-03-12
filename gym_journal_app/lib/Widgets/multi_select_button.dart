@@ -26,7 +26,7 @@ class _MultiSelectButtonState extends State<MultiSelectButton> {
     return IconButton(
       icon: Icon(
         Icons.add_circle,
-        size: 40.0,
+        size: 70.0,
         color: primaryThemeColour,
       ),
       onPressed: () {

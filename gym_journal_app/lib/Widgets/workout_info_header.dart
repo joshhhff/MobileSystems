@@ -20,8 +20,9 @@ class WorkoutInfoHeader extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
             ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                     Text(
                         exerciseName,
@@ -33,6 +34,19 @@ class WorkoutInfoHeader extends StatelessWidget {
                     ),
                     SizedBox(height: sizedBoxSize),
                     // Add more content here
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          // add logic for deleting/copying workout
+                        },
+                        child: Icon(
+                            Icons.more_vert,
+                            size: 40,
+                            color: const Color.fromARGB(255, 75, 73, 73),
+                        ),
+                      ),
+                    ),
                 ],
             ),
         );

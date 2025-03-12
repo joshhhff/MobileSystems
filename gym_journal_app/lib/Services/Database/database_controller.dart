@@ -94,6 +94,19 @@ class DatabaseController {
       return Result(success: false, message: e.toString());
     }
   }
+  
+  Future<Result> GetTotalWaterLogged() async {
+    try {
+      var userId = FirebaseAuth.instance.currentUser!.uid;
+      var firestoreCollection = _firestore.collection('entries').doc('all-entries').collection('water');
+
+      var data = await firestoreCollection.where('userId', isEqualTo: userId).get();
+
+      return Result(success: true, message: 'Data retrieved successfully', data: data);
+    } catch (e) {
+      return Result(success: false, message: e.toString());
+    }
+  }
 
   Future<Result> UpdateDocument(String collection, String documentID, dynamic data) async {
     try {
@@ -143,9 +156,9 @@ class DatabaseController {
     }
   }
 
-  Future<Result> getWaterConsumed() async {
+  Future<Result> getWaterConsumed({ required bool getTotalWater }) async {
         try {
-            Result entries = await GetWaterLoggedToday();
+            Result entries = !getTotalWater ? await GetWaterLoggedToday() : await GetTotalWaterLogged();
             Result userDetailsFromDb = await RetrieveUserDetails();
             if (entries.success && userDetailsFromDb.success) {
                 // get user water goals and convert to ml before checking progress
@@ -163,6 +176,8 @@ class DatabaseController {
 
                     double convertedAmount = _commonTools.convertToMl(waterAmount, waterUnits);
                     waterDrank = waterDrank + convertedAmount;
+
+                    print('total water drank $waterDrank');
                 });
 
                 WaterConsumed waterDrankToday = WaterConsumed(
@@ -228,6 +243,8 @@ class DatabaseController {
                     var set = exercise.sets![setCounter];
                     set.exerciseId = newExercise.id;
                     set.setOrder = setCounter;
+                    set.weight = int.parse(set.weightController.text);
+                    set.reps = int.parse(set.repsController.text);
 
                     var setCollection = _firestore.collection('entries').doc('all-entries').collection('sets');
 
