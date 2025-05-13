@@ -230,11 +230,14 @@ class DatabaseController {
             
             var newWorkout = await firestoreCollection.add(workoutData);
 
+            print('Exercises ${workout.exercises}');
+
             for (int exerciseCounter = 0; exerciseCounter < workout.exercises.length; exerciseCounter++) {
                 var exercise = workout.exercises[exerciseCounter];
                 exercise.workoutId = newWorkout.id;
                 exercise.exerciseOrder = exerciseCounter;
                 var exerciseData = exercise.ToJSON();
+                print('Exercise data $exerciseData');
 
                 var exerciseCollection = _firestore.collection('entries').doc('all-entries').collection('exercises');
                 var newExercise = await exerciseCollection.add(exerciseData);
@@ -269,6 +272,7 @@ class DatabaseController {
                 data['id'] = doc.id; // Retain the document ID
                 return data;
             }).toList();
+            print('Exercise data $exercises');
 
             exercises.sort((a, b) => (a['exerciseOrder'] as int).compareTo(b['exerciseOrder'] as int));
 
@@ -289,6 +293,38 @@ class DatabaseController {
             }
 
             return Result(success: true, message: 'Workout data retrieved and sorted successfully', data: exercises);
+        } catch (e) {
+            return Result(success: false, message: e.toString());
+        }
+    }
+
+    Future<Result> deleteWorkout(String workoutId) async {
+        try {
+            // delete workout document
+            var firestoreCollection = _firestore.collection('entries').doc('all-entries').collection('workouts');
+
+            await firestoreCollection.doc(workoutId).delete();
+
+            // delete exercise documents
+            var exerciseCollection = _firestore.collection('entries').doc('all-entries').collection('exercises');
+
+            var querySnapshot = await exerciseCollection.where('workoutId', isEqualTo: workoutId).get();
+            
+            querySnapshot.docs.forEach((doc) async {
+                var documentID = doc.id;
+                await exerciseCollection.doc(documentID).delete();
+
+                // delete set documents
+                var setCollection = _firestore.collection('entries').doc('all-entries').collection('sets');
+                var setQuerySnapshot = await setCollection.where('exerciseId', isEqualTo: documentID).get();
+
+                setQuerySnapshot.docs.forEach((doc) async {
+                    var setDocumentID = doc.id;
+                    await setCollection.doc(setDocumentID).delete();
+                });
+            });
+
+            return Result(success: true, message: 'Workout deleted successfully');
         } catch (e) {
             return Result(success: false, message: e.toString());
         }

@@ -7,8 +7,9 @@ class WorkoutInfoHeader extends StatelessWidget {
     final double marginsAndPadding;
     final double sizedBoxSize;
     final String exerciseName;
+    final Function onDelete;
 
-    const WorkoutInfoHeader({super.key, required this.marginsAndPadding, required this.sizedBoxSize, required this.exerciseName});
+    const WorkoutInfoHeader({super.key, required this.marginsAndPadding, required this.sizedBoxSize, required this.exerciseName, required this.onDelete});
 
     @override
     Widget build(BuildContext context) {
@@ -24,29 +25,64 @@ class WorkoutInfoHeader extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                    Text(
-                        exerciseName,
-                        style: TextStyle(
-                            color: primaryThemeColour,
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.bold,
-                        ),
-                    ),
-                    SizedBox(height: sizedBoxSize),
-                    // Add more content here
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
+                  Text(
+                  exerciseName,
+                  style: TextStyle(
+                    color: primaryThemeColour,
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  ),
+                  SizedBox(height: sizedBoxSize),
+                  Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                    final RenderBox iconBox = context.findRenderObject() as RenderBox;
+                    final Offset iconPosition = iconBox.localToGlobal(Offset.zero);
+                    final double iconWidth = iconBox.size.width;
+                    final double iconHeight = iconBox.size.height;
+
+                    showMenu(
+                      color: Color.fromARGB(255, 31, 149, 245),
+                      context: context,
+                      position: RelativeRect.fromLTRB(
+                      iconPosition.dx + iconWidth, // Position menu to the right of the icon
+                      iconPosition.dy + iconHeight, // Position menu below the icon
+                      0, // No offset on the left
+                      0, // No offset on the bottom
+                      ),
+                      items: [
+                      /* PopupMenuItem(
+                        child: ListTile(
+                        leading: Icon(Icons.copy, color: Colors.white),
+                        title: Text('Copy Workout', style: TextStyle(color: Colors.white)),
                         onTap: () {
-                          // add logic for deleting/copying workout
+                          // Add logic for copying workout
+                          Navigator.pop(context);
                         },
-                        child: Icon(
-                            Icons.more_vert,
-                            size: 40,
-                            color: const Color.fromARGB(255, 75, 73, 73),
+                        ),
+                      ), */
+                      PopupMenuItem(
+                        child: ListTile(
+                        leading: Icon(Icons.delete, color: Colors.white),
+                        title: Text('Delete Workout', style: TextStyle(color: Colors.white)),
+                        onTap: () {
+                          // Add logic for deleting workout
+                          onDelete();
+                        },
                         ),
                       ),
+                      ],
+                    );
+                    },
+                    child: Icon(
+                    Icons.more_vert,
+                    size: 40,
+                    color: const Color.fromARGB(255, 75, 73, 73),
                     ),
+                  ),
+                  ),
                 ],
             ),
         );

@@ -12,7 +12,7 @@ class NewExcercise extends StatefulWidget {
     const NewExcercise({super.key, required this.exerciseName, required this.onDismiss, required this.onSetChange, required this.uniqueKey});
 
     @override
-    State<NewExcercise> createState() => _NewExcerciseState();
+    State<NewExcercise> createState() => _NewExcerciseState(); 
 }
 
 class _NewExcerciseState extends State<NewExcercise> {
@@ -90,7 +90,7 @@ class _NewExcerciseState extends State<NewExcercise> {
                                         sets.removeAt(index);
                                         widget.onSetChange(widget.uniqueKey, sets);
 
-                                        if (sets.length == 0) widget.onDismiss(widget.exerciseName);
+                                        if (sets.length == 0) widget.onDismiss(widget.uniqueKey);
                                     });
                                 },
                                 background: Container(

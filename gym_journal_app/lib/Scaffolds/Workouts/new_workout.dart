@@ -42,9 +42,9 @@ class _NewWorkoutState extends State<NewWorkout> {
         });
     }
 
-    void updateExercise(String workout, List<SetEntry> sets) {
+    void updateExercise(String exercise, List<SetEntry> sets) {
         setState(() {
-            final index = exercises.indexWhere((element) => element.uniqueKey == workout);
+            final index = exercises.indexWhere((element) => element.uniqueKey == exercise);
             if (index != -1) {
                 exercises[index].sets = sets;
             }

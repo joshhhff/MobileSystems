@@ -23,7 +23,8 @@ class WorkoutLog {
       'dateCreated': dateCreated,
       'workoutDuration': workoutDuration,
       'workoutName': workoutName,
-      'exerciseDate': exerciseDate
+      'exerciseDate': exerciseDate,
+      'exercises': exercises.map((e) => e.ToJSON()).toList(),
     };
   }
 }

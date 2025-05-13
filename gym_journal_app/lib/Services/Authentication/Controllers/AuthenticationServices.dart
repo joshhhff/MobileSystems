@@ -64,7 +64,7 @@ class AuthenticationController {
         email: email,
         password: password
       );
-      return Result(success: true, message: 'User logged in successfully');
+      return Result(success: true, message: 'User logged in successfully', data: user);
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {

@@ -15,6 +15,7 @@ class ExerciseEntry {
             'uniqueKey': uniqueKey,
             'exerciseOrder': exerciseOrder,
             'workoutId': workoutId,
+            'sets': sets?.map((e) => e.ToJSON()).toList(),
         };
     }
 }

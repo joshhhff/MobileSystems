@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_journal_app/Models/Result.dart';
+import 'package:gym_journal_app/Scaffolds/Workouts/workouts.dart';
 import 'package:gym_journal_app/Services/Database/database_controller.dart';
 import 'package:gym_journal_app/Themes/theme.dart';
 import 'package:gym_journal_app/Utilities/common_tools.dart';
@@ -32,6 +33,17 @@ class _WorkoutInfoState extends State<WorkoutInfo> {
     try {
       var exercises = await _databaseController.getWorkoutData(widget.workoutId);
       return Result(success: true, message: '', data: exercises);
+    } catch (e) {
+      return Result(success: false, message: e.toString());
+    }
+  }
+
+  Future<Result> deleteWorkout() async {
+    try {
+      await _databaseController.deleteWorkout(widget.workoutId);
+
+      Navigator.push((context), MaterialPageRoute(builder: (context) => Workout()));
+      return Result(success: true, message: 'Workout deleted');
     } catch (e) {
       return Result(success: false, message: e.toString());
     }
@@ -70,6 +82,7 @@ class _WorkoutInfoState extends State<WorkoutInfo> {
                       marginsAndPadding: marginsAndPadding,
                       sizedBoxSize: sizedBoxSize,
                       exerciseName: widget.workoutName,
+                      onDelete: deleteWorkout,
                     ),
                     Expanded(
                       child: Container(

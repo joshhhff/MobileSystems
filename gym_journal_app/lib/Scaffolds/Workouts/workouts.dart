@@ -247,17 +247,7 @@ class _WorkoutState extends State<Workout> {
                                                                                                                                             ],
                                                                                                                                         ),
                                                                                                                                     ),
-                                                                                                                                    Row(
-                                                                                                                                        children: [
-                                                                                                                                            IconButton(
-                                                                                                                                                icon: Icon(Icons.delete,
-                                                                                                                                                        size: 30, color: Colors.red),
-                                                                                                                                                onPressed: () {
-                                                                                                                                                    // Add your delete functionality here
-                                                                                                                                                },
-                                                                                                                                            ),
-                                                                                                                                        ],
-                                                                                                                                    ),
+                                                                                                                                   
                                                                                                                                 ],
                                                                                                                             ),
                                                                                                                         ),
